@@ -2,8 +2,9 @@
 import { router, usePage } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MyDialogModal from "../../Shared/MyDialogModal.vue";
-import JetSecoundaryButton from "@/Components/SecondaryButton.vue";
-
+import JetPrimaryButton from "@/Components/PrimaryButton.vue";
+import SectionTitle from "@/Components/SectionTitle.vue";
+import Table from "@/Components/DataTable.vue";
 import { computed, ref } from "vue";
 
 const props = defineProps({
@@ -12,6 +13,13 @@ const props = defineProps({
 });
 
 const openMyDialogModal = ref(false);
+
+const tableColumns = [
+    { label: "Nome", field: "name" },
+    { label: "Quantidade requerida", field: "quantity_required" },
+    { label: "Valor unitário", field: "unitary_value" },
+    { label: "Valor total", field: "total_value" },
+];
 
 function openModalContracts() {
     router.visit(route("items"), {
@@ -33,84 +41,29 @@ function openModalContracts() {
                 Items Control
             </h2>
         </template>
-        <div class="flex flex-col overflow-auto rounded-lg shadow">
-            <table class="w-full">
-                <thead class="bg-indigo-400 border-b-2 border-gray-200">
-                    <tr>
-                        <th
-                            scope="col"
-                            class="pl-2 text-sm font-semibold tracking-wide text-white"
-                        >
-                            Actions
-                        </th>
-                        <th
-                            scope="col"
-                            class="text-sm font-semibold tracking-wide text-left text-white"
-                        >
-                            <span class="flex">Name </span>
-                        </th>
-                        <th
-                            scope="col"
-                            class="text-sm font-semibold tracking-wide text-left text-white"
-                        >
-                            Quantity required
-                        </th>
-                        <th
-                            scope="col"
-                            class="text-sm font-semibold tracking-wide text-left text-white"
-                        >
-                            Unitary Value
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-2 text-xs font-semibold tracking-wider text-left text-white uppercase"
-                        >
-                            <span class="inline-flex w-full justify-between"
-                                >Total Value</span
-                            >
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-2 text-xs font-semibold tracking-wider text-left text-white uppercase"
-                        >
-                            <span class="inline-flex w-full justify-between"
-                                >Contracts</span
-                            >
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="(item, index) in props.items"
-                        :key="item.id"
-                        :class="{ 'bg-gray-50': index % 2 == 0 }"
-                        class="bg-white border-b border-l border-r"
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <SectionTitle>
+                    <template #title> Items Settings </template>
+                    <template #description>
+                        Here you can manage items. Still building ...
+                    </template>
+                </SectionTitle>
+
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div
+                        class="px-4 py-5 bg-white dark:bg-gray-800 sm:p-6 shadow"
                     >
-                        <td
-                            class="p-3 text-sm text-gray-700 whitespace-nowrap text-center"
+                        <JetPrimaryButton class="mb-2"
+                            >+ Create Item</JetPrimaryButton
                         >
-                            Edit
-                        </td>
-                        <td class="text-sm text-gray-700 whitespace-nowrap">
-                            {{ item.nome }}
-                        </td>
-                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {{ item.quantidadeContratada }}
-                        </td>
-                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {{ item.valorUnitario }}
-                        </td>
-                        <td class="pl-8">
-                            {{ item.valorTotal }}
-                        </td>
-                        <td class="pl-8">
-                            <JetSecoundaryButton @click="openModalContracts"
-                                >Open Contracts</JetSecoundaryButton
-                            >
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        <Table
+                            :columns="tableColumns"
+                            :data="props.items"
+                        ></Table>
+                    </div>
+                </div>
+            </div>
         </div>
         <MyDialogModal
             :opened="openMyDialogModal"
