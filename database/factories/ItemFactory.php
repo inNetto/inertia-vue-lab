@@ -24,8 +24,8 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->unique()->word(),
             'quantity_required' => $this->faker->randomDigit,
-            'unitary_value' => $this->faker->randomDigit,
-            'total_value' => $this->faker->randomDigit,
+            'unitary_value' => $this->faker->randomFloat(2, 0, 8),
+            'total_value' => $this->faker->randomFloat(2, 0, 8),
         ];
     }
 }

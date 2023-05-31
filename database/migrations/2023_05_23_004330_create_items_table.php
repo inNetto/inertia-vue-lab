@@ -15,8 +15,8 @@ return new class extends Migration
             $table->increments('id')->integer('id', 10);
             $table->string('name');
             $table->integer('quantity_required');
-            $table->integer('unitary_value');
-            $table->integer('total_value');
+            $table->double('unitary_value');
+            $table->double('total_value');
             $table->timestamps();
         });
     }
